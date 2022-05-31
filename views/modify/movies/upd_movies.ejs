@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../templates/head') %>
+<body>
+
+    <%- include('../../templates/navbar') %>
+
+    <div class="container-fluid bg-disney bg-primary">
+        <div class="container-sm mb-5 mb-md-0 pt-5">
+            <div class="row mt-5 mx-md-2">
+                
+                <div class="col-12 d-flex justify-content-center flex-wrap gap-3 bg-light mb-5 px-3 py-3 px-sm-5 py-sm-3 rounded shadow-lg">
+
+                    <h1 class="text-center">Actualizar Pelicula</h1>
+                    </div>
+
+                </div>
+
+                <div class="col-12 d-flex justify-content-center align-items-center  flex-wrap gap-4">
+
+                        <div class="card bg-light" style="max-width: 350px; width: 100%;">
+
+                            <% movies.forEach(movie=>{ %>
+
+                                <form method="POST" action="/modify/movies/update/<%= movie.id %>" class="form px-3 py-4 px-sm-5 py-sm-4" id="updateMovForm">
+                                    <div class="mb-3">
+                                        <label for="title" class="form-label">Titulo</label>
+                                        <input type="text" name="title" value="<%= movie.title %>" class="form-control" id="titleUpdate">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="creationDate" class="form-label">Fecha de creacion</label>
+                                        <input type="date" name="creationDate" value="<%= movie.creationDate %>" class="form-control" id="creationDateUpdate">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="qualification" class="form-label">Calificación (0-10)</label>
+                                        <input type="number" min="0" max="10" name="qualification" value="<%= movie.details.qualification %>" class="form-control" id="qualificationUpdate">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="image" class="form-label">Imagen</label>
+                                        <input type="text" name="image" value="<%= movie.image %>" class="form-control" id="imageMovUpdate">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="gender" class="form-label">Genero</label>
+        
+                                        <select class="form-control mb-2 me-2" type="search" name="gender" aria-label="Search" id="genderMovUpdate">
+                                            <option class="" value="">--Elije una--</option>
+        
+                                            <% genders.forEach(gender=>{ %>
+                                                <option value="<%= gender.id %>"> <%= gender.gender %> </option>
+                                            <% }) %>
+                                            
+                                        </select>
+        
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="characters" class="form-label">Personajes</label>
+
+                                        <% for(let i = 1 ; i <=3 ; i++) { %>
+                                            <select class="form-control mb-2 me-2" type="search" name="characters" aria-label="Search">
+                                                <option class="" value="">--Elije una--</option>
+        
+                                                <% characters.forEach(character=>{ %>
+                                                    <option value="<%= character.id %>"> <%= character.name %> </option>
+                                                <% }) %>
+                                                
+                                            </select>
+    
+                                        <% }; %>
+
+                                    </div>
+                                    <div class="d-grid mb-4">
+                                        <button href="#" class="btn btn-outline-success" id="updateForm">Actualizar</button>
+                                    </div>
+
+                                </form>
+
+                            <% }) %>
+
+                        </div>
+
+                        <%- include('../../templates/movie-card') %>
+
+                </div>
+                
+            </div>        
+        </div>
+    </div>
+
+    <%- include('../../templates/footer') %>
+
+    <%- include('../../templates/alerts') %>
+
+</body>
+</html>

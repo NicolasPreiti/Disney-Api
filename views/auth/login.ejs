@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../templates/head') %>
+<body>
+
+    <%- include('../templates/navbar') %>
+
+    <div class="container-fluid bg-disney bg-primary">
+        <div class="container mb-5 mb-md-0 pt-5">
+            <div class="row d-grid d-md-flex h-50 mt-5 mx-2 mx-md-2 bg-primary border-dark rounded-end overflow-hidden shadow">
+
+                <div class="col col-lg-7 banner banner-md">
+                </div>
+                
+                <div class="col py-4 px-4 bg-white">
+                    <h3 class="text-center mb-4">Iniciar sesion</h3>
+    
+                    <form action="/auth/login" method="post" class="p-0 p-sm-2">
+                        <div class="mb-4">
+                            <label for="email" class="form-label">Correo Electronico</label>
+                            <input type="email" name="email" class="form-control" id="nameLogin">
+                        </div>
+                        <div class="mb-4">
+                            <label for="password" class="form-label">Contraseña</label>
+                            <input type="password" name="password" class="form-control" id="passwordLogin">
+                        </div>
+                        <div class="d-grid mb-4">
+                            <button class="btn btn-outline-primary" id="loginForm">Iniciar sesion</button>
+                        </div>
+    
+                        <div class="mb-4">
+                            <span class="">No tienes una cuenta?</span> <a href="/auth/register" class="link-primary">Registrate</a>
+                        </div>
+                    </form>
+    
+                </div>
+                
+            </div>        
+        </div>
+    </div>
+
+    <%- include('../templates/footer') %>
+    
+    <%- include('../templates/alerts') %>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!-- ALERTA -->
+<% if(alert) { %>
+    <script>
+
+        Swal.fire({
+            icon: '<%= alertIcon %>',
+            title: '<%= alertTitle %>',
+            text: '<%= alertText %>',
+            showConfirmButton: <%= showConfirmButton %>,
+            timer: <%= timer %>
+        }).then(()=>{
+            window.location = '/<%= route %>'
+        }).then(()=>{window.location = '/<%= route %>'});
+
+    </script>
+<% } %>

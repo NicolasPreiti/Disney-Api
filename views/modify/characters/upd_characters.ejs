@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../templates/head') %>
+<body>
+
+    <%- include('../../templates/navbar') %>
+
+    <div class="container-fluid bg-disney bg-primary">
+        <div class="container-sm mb-5 mb-md-0 pt-5">
+            <div class="row mt-5 mx-md-2">
+                
+                <div class="col-12 d-flex justify-content-center flex-wrap gap-3 bg-light mb-5 px-3 py-3 px-sm-5 py-sm-3 rounded shadow-lg">
+
+                    <h1 class="text-center">Actualizar Personaje</h1>
+                    </div>
+
+                </div>
+
+                <div class="col-12 d-flex justify-content-center align-items-center  flex-wrap gap-4">
+
+                        <div class="card bg-light" style="max-width: 350px; width: 100%;">
+
+                            <% characters.forEach(character=>{ %>
+
+                                <form method="POST" action="/modify/characters/update/<%= character.id %>" class="form px-3 py-4 px-sm-5 py-sm-4">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Nombre</label>
+                                        <input type="text" name="name" value="<%= character.name %>" class="form-control" id="nameUpdate">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="age" class="form-label">Edad</label>
+                                        <input type="number" name="age" value="<%= character.details.age %>" class="form-control" id="ageUpdate">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="weight" class="form-label">Peso</label>
+                                        <input type="number" name="weight" value="<%= character.details.weight %>" class="form-control" id="weightUpdate">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="history" class="form-label">Historia</label>
+                                        <input type="text" name="history" value="<%= character.details.history %>" class="form-control" id="historyUpdate">
+                                    </div>
+                                    <div class="mb-4">
+                                        <label for="image" class="form-label">Imagen URL</label>
+                                        <input type="text" name="image" value="<%= character.image %>" class="form-control" id="imageUpdate">
+                                    </div>
+
+                                    <!-- <div class="mb-4">
+                                        <label for="movies" class="form-label">Pelicula/Serie</label>
+                                        <select class="form-control mb-2 me-2" type="search" name="movies" aria-label="Search">
+                                            <option class="" value="">--Elije una--</option>
+    
+                                            <% movies.forEach(movie=>{ %>
+                                                <option value="<%= movie.id %>"> <%= movie.title %> </option>
+                                            <% }) %>
+                                            
+                                        </select>
+                                    </div> -->
+                                    
+                                    <div class="d-grid mb-4">
+                                        <button href="#" class="btn btn-outline-success" id="updateForm">Actualizar</button>
+                                    </div>
+                                </form>
+
+                            <% }) %>
+
+                        </div>
+
+                        <%- include('../../templates/character-card') %>
+
+                </div>
+                
+            </div>        
+        </div>
+    </div>
+
+    <%- include('../../templates/footer') %>
+
+    <%- include('../../templates/alerts') %>
+
+</body>
+</html>

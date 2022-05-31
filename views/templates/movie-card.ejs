@@ -1,0 +1,29 @@
+<% movies.forEach(movie=>{ %>
+  
+    <article class="card mb-4 px-2 pt-2 shadow" style="max-width: 300px; width: 100%;">
+
+        <img src="<%= movie.image %>" height="180px" class="card-img-top object-fit-cover bg-primary border" alt="">
+        <div class="card-body">
+            <h4 class="card-title text-center mb-4 text-capitalize letter-spacing">
+                <%= movie.title %>
+            </h4>
+    
+            <!-- ACORDEON -->
+            <p class="d-grid text-center mb-2">
+                <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                  Detalles
+                </button>
+            </p>
+            <div class="collapse" id="collapseExample">
+                <div class="card card-body">
+                    <h6 class="">Fecha de creación: <%= movie.creationDate %> </h6>
+                    <h6 class="">Calificación: <%= movie.details.qualification %> </h6>
+                    <h6 class="">Genero: <%= movie.details.gender %> </h6>
+                    <h6 class="">Personajes: <%= movie.details.characters %> </h6>
+                </div>
+            </div>
+        </div>
+    
+    </article>
+
+<% }) %>

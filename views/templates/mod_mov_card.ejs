@@ -1,0 +1,46 @@
+<% movies.forEach(movie=>{ %>
+  
+    <article class="card mb-4 px-2 pt-2 shadow" style="max-width: 300px; width: 100%;">
+
+        <img src="<%= movie.image %>" height="180px" class="card-img-top object-fit-cover bg-primary border" alt="">
+        <div class="card-body">
+            <h4 class="card-title text-center mb-4 text-capitalize letter-spacing">
+                <%= movie.title %>
+            </h4>
+    
+            <!-- ACORDEON -->
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Modificar
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                        <div class="accordion-body d-grid gap-2">
+                            <a href="/modify/movies/update/<%= movie.id %>" class="btn btn-success">Actualizar</a>
+                            <a href="/modify/movies/delete/<%= movie.id %>" class="btn btn-danger">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            Detalles
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <h6 class="">Fecha de creación: <%= movie.creationDate %> </h6>
+                            <h6 class="">Calificación: <%= movie.details.qualification %> </h6>
+                            <h6 class="">Genero: <%= movie.details.gender %> </h6>
+                            <h6 class="">Personajes: <%= movie.details.characters %> </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </article>
+
+<% }) %>

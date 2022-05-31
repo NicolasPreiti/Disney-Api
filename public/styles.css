@@ -1,0 +1,46 @@
+body {
+    min-height: 100vh;
+    background: rgb(204, 238, 80);
+    background: linear-gradient(to right, rgb(113, 73, 255) 40%, rgb(9, 82, 179) 90%);
+}
+
+.letter-spacing {
+    letter-spacing: 3px;
+}
+
+.bg-disney {
+    min-height: 100vh;
+    background-image: url(images/castle2.webp);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.object-fit-cover {
+    object-fit: cover;
+}
+
+@media (min-width: 992px) {
+    .height-lg {
+        height: 100vh;
+    }
+}
+
+@media (max-width: 767px) {
+    .banner {
+        height: 80px;
+        background-image: url(images/disney.jpg);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
+
+@media (min-width: 768px) {
+    .banner-md {
+        background-image: url(images/disney.jpg);
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}

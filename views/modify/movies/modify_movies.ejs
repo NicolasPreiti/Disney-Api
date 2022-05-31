@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../templates/head') %>
+<body>
+
+    <%- include('../../templates/navbar') %>
+
+    <div class="container-fluid bg-disney bg-primary">
+        <div class="container-sm mb-5 mb-md-0 pt-5">
+            <div class="row mt-5 mx-md-2">
+                
+                <div class="col-12 d-flex justify-content-center flex-wrap gap-3 mb-5 px-3 py-3 px-sm-5 py-sm-3 rounded shadow-lg bg-light">
+
+                    <h1 class="text-center">Modificar Peliculas</h1>
+                    <div class="d-flex justify-content-end align-items-center">
+                        <a href="/modify/movies/add" class="btn btn-outline-primary">
+                            Añadir
+                        </a>
+                    </div>
+
+                </div>
+
+                <div class="col-12 d-flex justify-content-center flex-wrap gap-4">
+
+                        <%- include('../../templates/mod_mov_card') %>
+
+                </div>
+                
+            </div>        
+        </div>
+    </div>
+
+    <%- include('../../templates/footer') %>
+
+    <%- include('../../templates/alerts') %>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('../../templates/head') %>
+<body>
+
+    <%- include('../../templates/navbar') %>
+
+    <div class="container-fluid bg-disney bg-primary">
+        <div class="container-sm mb-5 mb-md-0 pt-5">
+            <div class="row mt-5 mx-md-2">
+                
+                <div class="col-12 d-flex justify-content-center flex-wrap gap-3 bg-light mb-5 px-3 py-3 px-sm-5 py-sm-3 rounded shadow-lg">
+
+                    <h1 class="text-center">Eliminar Personaje</h1>
+
+                </div>
+
+                <div class="col-12 d-flex justify-content-center align-items-center  flex-wrap gap-4">
+
+                    <% characters.forEach(character=>{ %>
+  
+                        <article class="card mb-4 px-2 pt-2 shadow" style="max-width: 300px; width: 100%;">
+                    
+                            <img src="<%= character.image %>" height="180px" class="card-img-top object-fit-cover bg-primary border" alt="">
+                            <div class="card-body">
+                                <h4 class="card-title text-center mb-4 text-capitalize letter-spacing">
+                                    <%= character.name %>
+                                </h4>
+                        
+                                <!-- ACORDEON -->
+                                <p class="d-grid text-center mb-2">
+                                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                                      Detalles
+                                    </button>
+                                </p>
+                                <div class="collapse mb-4" id="collapseExample">
+                                    <div class="card card-body">
+                                        <h6 class="">Edad: <%= character.details.age %> </h6>
+                                        <h6 class="">Peso: <%= character.details.weight %> </h6>
+                                        <h6 class="">Historia: <%= character.details.history %> </h6>
+                                        <h6 class=""><b>Peliculas/Series:</b> <%= character.details.moviesTitle %> </h6>
+                                    </div>
+                                </div>
+                                <form method="POST" action="/modify/characters/delete/<%= character.id %>" class="d-grid">
+                                    <button class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </div>
+                        
+                        </article>
+                    
+                    <% }) %>
+
+                </div>
+                
+            </div>        
+        </div>
+    </div>
+
+    <%- include('../../templates/footer') %>
+
+    <%- include('../../templates/alerts') %>
+
+</body>
+</html>
