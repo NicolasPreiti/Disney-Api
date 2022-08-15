@@ -1,63 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('../templates/head') %>
-<body>
-
+  <%- include('../templates/head') %>
+  <body>
     <%- include('../templates/navbar') %>
 
     <div class="container-fluid bg-disney bg-primary">
-        <div class="container-sm mb-5 mb-md-0 pt-5">
-            <div class="row mt-5 mx-md-2">
-                
-                <div class="col-12 d-flex justify-content-center align-items-center flex-wrap gap-3 mb-5 px-3 py-3 px-sm-5 py-sm-3 rounded shadow-lg bg-light">
+      <div class="container-sm mb-5 mb-md-0 pt-5">
+        <div class="row mt-5 mx-md-2">
+          <div
+            class="col-12 d-flex justify-content-center align-items-center flex-wrap gap-3 mb-5 px-3 py-3 px-sm-5 py-sm-3 rounded shadow-lg bg-light"
+          >
+            <h1>Personajes</h1>
 
-                    <h1>Personajes</h1>
-                    
-                    <!-- ACORDEON -->
-                    <div class="d-flex justify-content-end align-items-center">
-                        <button class="btn btn-warning text-light   " type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                          Buscador
-                        </button>
-                    </div>
-                    <div class="collapse" id="collapseExample">
-                        <form method="GET" action="/characters" class="d-grid align-items-center p-1 rounded" role="search">
-                            <button class="btn btn-outline-success" type="submit">Todos los personajes</button>
-                        </form>
-                        <form method="GET" action="/characters" class="d-flex justify-content-end align-items-center p-1 rounded" role="search">
-                            <input class="form-control me-2" type="search" name="name" placeholder="Por nombre" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Buscar</button>
-                        </form>
-                        <form method="GET" action="/characters" class="d-flex justify-content-end align-items-center p-1 rounded" role="search">
-                            <input class="form-control me-2" type="search" name="age" placeholder="Por edad" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Buscar</button>
-                        </form>
-                        <form method="GET" action="/characters" class="d-flex justify-content-end align-items-center p-1 rounded" role="search">
-                            <input class="form-control me-2" type="search" name="weight" placeholder="Por peso" aria-label="Search">
-                            <button class="btn btn-outline-success" type="submit">Buscar</button>
-                        </form>
-                    </div>
-                    
-                    <div class="d-flex justify-content-end align-items-center">
-                        <a href="/modify/characters" class="btn btn-outline-primary">
-                            Modificar
-                        </a>
-                    </div>
+            <!-- ACORDEON -->
+            <div class="d-flex justify-content-end align-items-center">
+              <button
+                class="btn btn-warning text-light"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseExample"
+                aria-expanded="false"
+                aria-controls="collapseExample"
+              >
+                Buscador
+              </button>
+            </div>
+            <div class="collapse" id="collapseExample">
+              <form
+                method="GET"
+                action="/characters"
+                class="d-grid align-items-center p-1 rounded"
+                role="search"
+              >
+                <button class="btn btn-outline-success" type="submit">Todos los personajes</button>
+              </form>
+              <form
+                method="GET"
+                action="/characters"
+                class="d-flex justify-content-end align-items-center p-1 rounded"
+                role="search"
+              >
+                <input
+                  class="form-control me-2"
+                  type="search"
+                  name="name"
+                  placeholder="Por nombre"
+                  aria-label="Search"
+                />
+                <button class="btn btn-outline-success" type="submit">Buscar</button>
+              </form>
+              <form
+                method="GET"
+                action="/characters"
+                class="d-flex justify-content-end align-items-center p-1 rounded"
+                role="search"
+              >
+                <input
+                  class="form-control me-2"
+                  type="search"
+                  name="age"
+                  placeholder="Por edad"
+                  aria-label="Search"
+                />
+                <button class="btn btn-outline-success" type="submit">Buscar</button>
+              </form>
+              <form
+                method="GET"
+                action="/characters"
+                class="d-flex justify-content-end align-items-center p-1 rounded"
+                role="search"
+              >
+                <input
+                  class="form-control me-2"
+                  type="search"
+                  name="weight"
+                  placeholder="Por peso"
+                  aria-label="Search"
+                />
+                <button class="btn btn-outline-success" type="submit">Buscar</button>
+              </form>
+            </div>
 
-                </div>
+            <div class="d-flex justify-content-end align-items-center">
+              <a href="/characters/modify" class="btn btn-outline-primary"> Modificar </a>
+            </div>
+          </div>
 
-                <div class="col-12 d-flex justify-content-center flex-wrap gap-4">
-
-                        <%- include('../templates/character-card') %>
-
-                </div>
-                
-            </div>        
+          <div class="col-12 d-flex justify-content-center flex-wrap gap-4">
+            <%- include('../templates/character-card') %>
+          </div>
         </div>
+      </div>
     </div>
 
-    <%- include('../templates/footer') %>
-
-    <%- include('../templates/alerts') %>
-
-</body>
+    <%- include('../templates/footer') %> <%- include('../templates/alerts') %>
+  </body>
 </html>

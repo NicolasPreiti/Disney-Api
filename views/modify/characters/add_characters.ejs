@@ -1,60 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('../../templates/head') %>
-<body>
-
+  <%- include('../../templates/head') %>
+  <body>
     <%- include('../../templates/navbar') %>
 
     <div class="container-fluid bg-disney bg-primary pb-5">
-        <div class="container-sm mb-5 mb-md-0 pt-5">
-            <div class="row mt-5 mx-md-2">
-                
-                <div class="col-12 d-flex justify-content-center flex-wrap gap-3 mb-5 px-3 py-3 px-sm-5 py-sm-3 rounded shadow-lg bg-light">
+      <div class="container-sm mb-5 mb-md-0 pt-5">
+        <div class="row mt-5 mx-md-2">
+          <div
+            class="col-12 d-flex justify-content-center flex-wrap gap-3 mb-5 px-3 py-3 px-sm-5 py-sm-3 rounded shadow-lg bg-light"
+          >
+            <h1 class="text-center">Añadir Personaje</h1>
+          </div>
 
-                    <h1 class="text-center">Añadir Personaje</h1>
-
+          <div class="col-12 d-flex justify-content-center align-items-center flex-wrap gap-4">
+            <div class="card bg-light" style="max-width: 350px; width: 100%">
+              <form
+                method="POST"
+                action="/characters/modify/add"
+                class="form px-3 py-4 px-sm-5 py-sm-4"
+              >
+                <div class="mb-3">
+                  <label for="name" class="form-label">Nombre</label>
+                  <input type="text" name="name" class="form-control" id="nameUpdate" />
                 </div>
-
-                <div class="col-12 d-flex justify-content-center align-items-center  flex-wrap gap-4">
-
-                    <div class="card bg-light" style="max-width: 350px; width: 100%;">
-                        <form method="POST" action="/modify/characters/add" class="form px-3 py-4 px-sm-5 py-sm-4">
-                            
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Nombre</label>
-                                <input type="text" name="name" class="form-control" id="nameUpdate">
-                            </div>
-                            <div class="mb-3">
-                                <label for="age" class="form-label">Edad</label>
-                                <input type="number" name="age" class="form-control" id="ageUpdate">
-                            </div>
-                            <div class="mb-3">
-                                <label for="weight" class="form-label">Peso</label>
-                                <input type="number" name="weight" class="form-control" id="weightUpdate">
-                            </div>
-                            <div class="mb-3">
-                                <label for="history" class="form-label">Historia</label>
-                                <input type="text" name="history" class="form-control" id="historyUpdate">
-                            </div>
-                            <div class="mb-4">
-                                <label for="image" class="form-label">Imagen URL</label>
-                                <input type="text" name="image" class="form-control" id="imageUpdate">
-                            </div>
-                            <div class="d-grid mb-4">
-                                <button href="#" class="btn btn-outline-success" id="updateForm">Añadir</button>
-                            </div>
-                        </form>
-                    </div>
-
+                <div class="mb-3">
+                  <label for="age" class="form-label">Edad</label>
+                  <input type="number" name="age" class="form-control" id="ageUpdate" />
                 </div>
-                
-            </div>        
+                <div class="mb-3">
+                  <label for="weight" class="form-label">Peso</label>
+                  <input type="number" name="weight" class="form-control" id="weightUpdate" />
+                </div>
+                <div class="mb-3">
+                  <label for="history" class="form-label">Historia</label>
+                  <input type="text" name="history" class="form-control" id="historyUpdate" />
+                </div>
+                <div class="mb-4">
+                  <label for="image" class="form-label">Imagen URL</label>
+                  <input type="text" name="image" class="form-control" id="imageUpdate" />
+                </div>
+                <div class="d-grid mb-4">
+                  <button href="#" class="btn btn-outline-success" id="updateForm">Añadir</button>
+                </div>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
-    <%- include('../../templates/footer') %>
-
-    <%- include('../../templates/alerts') %>
-
-</body>
+    <%- include('../../templates/footer') %> <%- include('../../templates/alerts') %>
+  </body>
 </html>
