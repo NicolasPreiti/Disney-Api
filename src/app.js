@@ -12,7 +12,7 @@ require('./database/db');
 
 // Templates Engine
 app.set('view engine', 'ejs');
-app.set('views', './views');
+app.set('views', './src/views');
 
 // Middlewares
 app.use(cookieParser());
