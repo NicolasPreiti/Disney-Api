@@ -4,7 +4,7 @@ const controller = require('../controllers/characters');
 const router = express.Router();
 
 router
-  .get('/', controller.getCharacters)
+  .get('/', controller.getAllCharacters)
   .get('/modify', controller.modifyCharacters)
   
   .get('/modify/add', controller.createView)

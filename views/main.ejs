@@ -1,49 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<%- include('./templates/head') %>
-<body>
-    
+  <%- include('./templates/head') %>
+  <body>
     <%- include('./templates/navbar') %>
 
     <div class="container-fluid bg-disney bg-primary">
-        <div class="container pt-5">
-            <div class="row mt-5 px-4">
-
-                <div class="col-12 col-sm-12 d-flex justify-content-center mx-auto mb-4 flex-wrap gap-5">
-    
-                    <article class="card bg-light shadow-lg" style="max-width: 340px;">
-                        <div class="card-body">
-                            <h3 class="card-title text-center mb-4">Personajes</h3>
-                            <img src="./images/remy.webp" alt="" height="200px" class="card-img mb-4 object-fit-cover bg-secondary">
-                            <p class="card-text text-center mb-4">
-                                Aqui encontraras algunos de los personajes del mundo de disney
-                            </p>
-                            <div class="d-flex justify-content-center mb-3">
-                                <a href="/characters" class="card-link btn btn-primary">EXPLORAR</a>
-                            </div>
-                        </div>
-                    </article>
-    
-                    <article class="card bg-light shadow-lg" style="max-width: 340px;">
-                        <div class="card-body">
-                            <h3 class="card-title text-center mb-4">Peliculas</h3>
-                            <img src="./images/cars.jpg" alt="" height="200px" class="card-img mb-4 object-fit-cover bg-secondary">
-                            <p class="card-text text-center mb-4">
-                                Aqui encontraras algunas de las peliculas del mundo de disney
-                            </p>
-                            <div class="d-flex justify-content-center mb-3">
-                                <a href="/movies" class="card-link btn btn-primary">EXPLORAR</a>
-                            </div>
-                        </div>
-                    </article>
-    
+      <div class="container pt-5">
+        <div class="row mt-5 px-4">
+          <div class="col-12 col-sm-12 d-flex justify-content-center mx-auto mb-4 flex-wrap gap-5">
+            <article class="card bg-light shadow-lg" style="max-width: 340px">
+              <div class="card-body">
+                <h3 class="card-title text-center mb-4">Personajes</h3>
+                <img
+                  src="./images/remy.webp"
+                  alt=""
+                  height="200px"
+                  class="card-img mb-4 object-fit-cover bg-secondary"
+                />
+                <p class="card-text text-center mb-4">
+                  Aqui encontraras algunos de los personajes del mundo de disney
+                </p>
+                <div class="d-flex justify-content-center mb-3">
+                  <a href="/characters" class="card-link btn btn-primary">EXPLORAR</a>
                 </div>
+              </div>
+            </article>
 
-            </div>
-        </div>    
+            <article class="card bg-light shadow-lg" style="max-width: 340px">
+              <div class="card-body">
+                <h3 class="card-title text-center mb-4">Peliculas</h3>
+                <img
+                  src="./images/cars.jpg"
+                  alt=""
+                  height="200px"
+                  class="card-img mb-4 object-fit-cover bg-secondary"
+                />
+                <p class="card-text text-center mb-4">
+                  Aqui encontraras algunas de las peliculas del mundo de disney
+                </p>
+                <div class="d-flex justify-content-center mb-3">
+                  <a href="/movies" class="card-link btn btn-primary">EXPLORAR</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
     </div>
 
     <%- include('./templates/footer') %>
-
-</body>
+  </body>
 </html>

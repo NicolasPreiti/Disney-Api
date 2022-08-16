@@ -1,69 +1,28 @@
+const service = require('../services/characters');
+const { charactersInArr } = require('../helpers/charactersArray');
 const { Characters, Movies } = require('../database/db');
-const { charactersInArr } = require('../src/functions/characters-array');
 
-const getCharacters = async(req, res) => {
-  const id_user = req.token.userValid.id;
-  const { name, age, weight } = req.query;
+const getAllCharacters = async(req, res) => {
+  const { query, token } = req;
 
-  //Busqueda por nombre
-  if (name) {
-    const charactersModel = await Characters.findAll({ where: { name, id_user }, include: Movies });
-    let charactersArr = charactersInArr(charactersModel);
+  const characters = await service.getAllCharacters(query, token);
+  let charactersArr = charactersInArr(characters);
 
+  if (charactersArr.length === 0) {
     return res.render('explore/characters', {
       title: 'Personajes',
       characters: charactersArr,
-      alert: false,
-    });
-  }
 
-  //Busqueda por edad
-  if (age) {
-    const charactersModel = await Characters.findAll({ where: { age, id_user }, include: Movies });
-    let charactersArr = charactersInArr(charactersModel);
-
-    return res.render('explore/characters', {
-      title: 'Personajes',
-      characters: charactersArr,
-      alert: false,
-    });
-  }
-
-  //Busqueda por peso
-  if (weight) {
-    const charactersModel = await Characters.findAll({ where: { weight, id_user }, include: Movies });
-    let charactersArr = charactersInArr(charactersModel);
-
-    return res.render('explore/characters', {
-      title: 'Personajes',
-      characters: charactersArr,
-      alert: false,
-    });
-  }
-
-  //Todos los personajes
-  const charactersModel = await Characters.findAll({ where: { id_user }, include: Movies });
-  let charactersArr = charactersInArr(charactersModel);
-
-  //Si no existen personajes
-  if (charactersModel.length == 0) {
-    return res.render('explore/characters', {
-      title: 'Personajes',
-
-      characters: charactersModel,
-
-      //ALERTA
       alert: true,
       alertIcon: 'info',
       alertTitle: 'Vacio',
       alertText: 'Aun no se han añadido personajes',
       showConfirmButton: true,
       timer: false,
-      route: 'modify/characters/add',
+      route: 'characters/modify/add',
     });
   }
 
-  //Si existen personajes
   res.render('explore/characters', {
     title: 'Personajes',
     characters: charactersArr,
@@ -72,10 +31,10 @@ const getCharacters = async(req, res) => {
 };
 
 const modifyCharacters = async(req, res) => {
-  const id_user = req.token.userValid.id;
-  const charactersModel = await Characters.findAll({ where: { id_user }, include: Movies });
+  const { query, token } = req;
 
-  const charactersArr = charactersInArr(charactersModel);
+  const characters = await service.getAllCharacters(query, token);
+  const charactersArr = charactersInArr(characters);
 
   res.render('modify/characters/modify_characters', {
     title: 'Personajes',
@@ -92,25 +51,14 @@ const createView = async(req, res) => {
 };
 
 const createCharacter = async(req, res) => {
+  const { body, token } = req;
 
-  const { name, age, weight, history, image } = req.body;
-  const id_user = req.token.userValid.id;
-
-  await Characters.create({
-    name: name.toLowerCase(),
-    age,
-    weight,
-    history,
-    image,
-    id_user,
-  });
+  await service.createCharacter(body, token);
     
   res.render('modify/characters/add_characters', {
     title: 'Personajes',
-
     characters: [],
 
-    //ALERTA
     alert: true,
     alertIcon: 'success',
     alertTitle: 'Añadido',
@@ -124,7 +72,7 @@ const createCharacter = async(req, res) => {
 
 const updateView = async(req, res) => {
   const idParam = req.params.id;
-  const id_user = req.token.userValid.id;
+  const id_user = req.token.body.id;
 
   const character = await Characters.findOne({ where: { id: idParam }, include: Movies });
   if (!character) {
@@ -135,7 +83,7 @@ const updateView = async(req, res) => {
   const movies = await Movies.findAll({ where: { id_user } });
   let moviesArr = [];
 
-  movies.forEach(movie => {
+  movies.forEach((movie) => {
     const { id, title } = movie.dataValues;
     moviesArr.push({
       id,
@@ -155,23 +103,14 @@ const updateView = async(req, res) => {
 };
 
 const updateCharacter = async(req, res) => {
-  const idParam = req.params.id;
-  const { name, age, weight, history, image } = req.body;
+  const { body, params } = req;
 
-  await Characters.update({
-    name,
-    age,
-    weight,
-    history,
-    image,
-  }, { where: { id: idParam } });
+  await service.updateCharacter(body, params);
 
   res.render('modify/characters/upd_characters', {
     title: 'Personajes',
-
     characters: [],
 
-    //ALERTA
     alert: true,
     alertIcon: 'success',
     alertTitle: 'Actualizado',
@@ -201,16 +140,14 @@ const deleteView = async(req, res) => {
 };
 
 const deleteCharacter = async(req, res) => {
-  const idParam = req.params.id;
+  const { params } = req;
 
-  await Characters.destroy({ where: { id: idParam } });
+  await service.deleteCharacter(params);
 
   res.render('modify/characters/del_characters', {
     title: 'Personajes',
-
     characters: [],
 
-    //ALERTA
     alert: true,
     alertIcon: 'success',
     alertTitle: 'Eliminado',
@@ -222,7 +159,7 @@ const deleteCharacter = async(req, res) => {
 };
 
 module.exports = {
-  getCharacters,
+  getAllCharacters,
   modifyCharacters,
   createView,
   createCharacter,

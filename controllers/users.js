@@ -1,8 +1,7 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { Users } = require('../database/db');
+const service = require('../services/users');
+const { generateToken } = require('../helpers/jwt');
 const { createDefault } = require('../database/defaultValues');
-const { sendMail } = require('../helpers/emailer');
+// const { sendMail } = require('../helpers/emailer');
 
 const registerView = (req, res) => {
   res.render('auth/register', {
@@ -12,10 +11,10 @@ const registerView = (req, res) => {
 };
 
 const registerUser = async(req, res) => {
-  const { email, password } = req.body;
-  const repeatUser = await Users.findOne({ where: { email } });
+  const { body } = req;
+  const newUser = await service.registerUser(body);
     
-  if (repeatUser) {
+  if (!newUser) {
     return res.render('auth/register', {
       title: 'Registro',
 
@@ -31,20 +30,13 @@ const registerUser = async(req, res) => {
     });
   }
 
-  const passwordHash = await bcrypt.hash(password, 8);
-  const newUser = await Users.create({
-    email,
-    password: passwordHash,
-  }); 
-
-  sendMail(newUser.email);
-
+  // // sendMail(newUser.email);
   createDefault(newUser.id);
 
   res.render('auth/register', {
     title: 'Registro',
 
-    //ALERTA
+    // Alert
     alert: true,
     alertIcon: 'success',
     alertTitle: 'Registro Exitoso',
@@ -64,19 +56,13 @@ const loginView = (req ,res) => {
 };
 
 const loginUser = async(req, res) => {
-  const { email, password } = req.body;
-  const user = await Users.findOne({ where: { email } });
+  const { body } = req;
+  const user = await service.loginUser(body);
 
-  const correctPassword = user === null
-    ? false
-    : await bcrypt.compare(password, user.password);
-
-  //Si el usuario o contraseña son erroneos lanza error.
-  if (!correctPassword) {
+  if (!user) {
     return res.render('auth/login', {
       title: 'Login',
 
-      //ALERTA
       alert: true,
       alertIcon: 'error',
       alertTitle: 'No valido',
@@ -88,15 +74,15 @@ const loginUser = async(req, res) => {
     });
   }
     
-  const userValid = { id: user.id };
+  const userData = { 
+    id: user.id, 
+  };
+  const token = generateToken(userData);
 
-  //CREACION DEL TOKEN
-  const token = jwt.sign({ userValid }, process.env.JWT, { expiresIn: '1d' });
   const cookieOptions = {
     httpOnly: true,
   };
 
-  //COOKIE => ALMACENA EL TOKEN
   res.cookie('jwt', token, cookieOptions);
   res.redirect('/');
 };

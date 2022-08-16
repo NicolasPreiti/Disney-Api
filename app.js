@@ -1,18 +1,16 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const mainRouter = require('./routes');
 require('dotenv').config();
 require('./helpers/emailer');
-
-//ROUTERS
-const mainRouter = require('./routes');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-//CONEXION DATABASE
+//  Database connection
 require('./database/db');
 
-//TEMPLATES ENGINE
+// Templates Engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
@@ -26,5 +24,5 @@ app.use(express.urlencoded());
 app.use('/', mainRouter);
 
 app.listen(port, () => {
-  console.log('\n🚀🚀 SERVIDOR FUNCIONANDO 🚀🚀');
+  console.log(`\n🚀🚀 SERVER RUNNING IN PORT ${port} 🚀🚀 `);
 });

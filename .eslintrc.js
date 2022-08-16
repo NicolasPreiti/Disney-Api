@@ -1,5 +1,3 @@
-// 'use strict';
-
 module.exports = {
   'env': {
     'browser': true,
@@ -46,9 +44,25 @@ module.exports = {
       'error',
       'always',
     ],
+    'space-before-blocks': [
+      'error',
+      'always',
+    ],
     'space-in-parens': [
       'error',
       'never',
+    ],
+    'no-multi-spaces': [
+      'error',
+      {
+        ignoreEOLComments: true,
+        exceptions: {
+          VariableDeclarator: false,
+          Property: false,
+          BinaryExpression: false,
+          ImportDeclaration: true,
+        },
+      },
     ],
     'comma-dangle': [
       'error',
@@ -83,6 +97,15 @@ module.exports = {
         'ignoreMemberSort': false,
         'memberSyntaxSortOrder': ['none', 'all', 'multiple', 'single',],
         'allowSeparatedGroups': false,
+      },
+    ],
+    'no-console': [
+      'error',
+      {
+        allow: [
+          'warn',
+          'error',
+        ],
       },
     ],
   },
