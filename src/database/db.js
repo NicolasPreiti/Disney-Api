@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize');
 const config = require('../config/config');
-const { users } = require('../models/challenges/Users');
-const { characters } = require('../models/challenges/Characters');
-const { movies } = require('../models/challenges/Movies');
-const { character_movie } = require('../models/challenges/Character_Movie');
-const { genders } = require('../models/challenges/Genders');
+const { users } = require('../models/Users');
+const { characters } = require('../models/Characters');
+const { movies } = require('../models/Movies');
+const { character_movie } = require('../models/Character_Movie');
+const { genders } = require('../models/Genders');
 
 //Nueva conexion
 const sequelize = new Sequelize(config.DB.NAME, config.DB.USER, config.DB.PASSWORD,{

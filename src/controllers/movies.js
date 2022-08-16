@@ -1,113 +1,29 @@
-const { Movies, Characters,Character_Movie, Genders } = require('../database/db');
+const { Characters, Character_Movie, Genders } = require('../database/db');
+const service = require('../services/movies');
+const { moviesInArr } = require('../helpers/moviesArray');
 
-//Array de peliculas
-const moviesInArr = async(arr) => {
-  const genders = await Genders.findAll();
-  let moviesArr = [];
+const getAllMovies = async(req, res) => {
+  const { query, token } = req;
 
-  arr.forEach(elem => {
-    const { title, creationDate, qualification, image, characters, id_gender } = elem.dataValues;
+  const movies = await service.getAllMovies(query, token);
+  const moviesArr = await moviesInArr(movies);
 
-    let movieGender;
-
-    genders.forEach(elem => {
-      const { id, gender } = elem.dataValues;
-      if (id == id_gender) {
-        movieGender = gender;
-      }
-    });
-
-    let charactersArr = [];
-    characters.forEach(character => {
-      const { id, name } = character.dataValues;
-      charactersArr.push(name);
-    });
-
-    moviesArr.push({
-      image,
-      title,
-      creationDate,
-      details: {
-        qualification,
-        gender: movieGender,
-        characters: charactersArr,
-      },
-    });
-  });
-  return moviesArr;
-};
-
-const getMovies = async(req, res) => {
-  const id_user = req.token.userValid.id;
-  const { title, creationDate } = req.query;
-  const orderBy = req.query.order;
-  let moviesArr = [];
-
-  //Busqueda por titulo
-  if (title) {
-    const moviesModel = await Movies.findAll({ where: { title, id_user }, include: Characters });
-
-    moviesArr = await moviesInArr(moviesModel);
-
+  if (movies.length === 0) {
     return res.render('explore/movies', {
       title: 'Peliculas',
-      movies: moviesArr,
-      alert: false,
-    });
-  }
+      movies: [],
 
-  //Ordenar por fecha de creacion: ASC
-  if (orderBy === 'ASC') {
-    const moviesModel = await Movies.findAll({ where: { id_user }, order: [['creationDate', 'ASC',],], include: Characters });
-
-    moviesArr = await moviesInArr(moviesModel);
-
-    return res.render('explore/movies', {
-      title: 'Peliculas',
-      movies: moviesArr,
-      alert: false,
-    });
-  }
-
-  //Ordenar por fecha de creacion: DESC
-  if (orderBy === 'DESC') {
-    const moviesModel = await Movies.findAll({ where: { id_user }, order: [['creationDate', 'DESC',],], include: Characters });
-
-    moviesArr = await moviesInArr(moviesModel);
-
-    return res.render('explore/movies', {
-      title: 'Peliculas',
-      movies: moviesArr,
-      alert: false,
-    });
-  }
-
-  //Todas los peliculas
-  const moviesModel = await Movies.findAll({ where: { id_user }, include: Characters });
-
-  moviesArr = await moviesInArr(moviesModel);
-  console.log(moviesArr, 'juan');
-
-  //Si no existen peliculas
-  if (moviesModel.length == 0) {
-    return res.render('explore/movies', {
-      title: 'Peliculas',
-
-      movies: moviesModel,
-
-      //ALERTA
       alert: true,
       alertIcon: 'info',
       alertTitle: 'Vacio',
       alertText: 'Aun no se han añadido peliculas',
       showConfirmButton: true,
       timer: false,
-      route: 'modify/movies/add',
+      route: '/movies/modify/add',
 
     });
   }
   
-  //Si existen peliculas
   res.render('explore/movies', {
     title: 'Peliculas',
     movies: moviesArr,
@@ -116,40 +32,10 @@ const getMovies = async(req, res) => {
 };
 
 const modifyMovies = async(req, res) => {
-  const id_user = req.token.userValid.id;
-  const moviesModel = await Movies.findAll({ where: { id_user }, include: Characters });
-  const genders = await Genders.findAll();
-  let moviesArr = [];
-  
-  moviesModel.forEach( (elem) => {
-    const { id, title, creationDate, qualification, image, id_gender, characters } = elem.dataValues;
-    let movieGender;
-  
-    genders.forEach(elem => {
-      const { id, gender } = elem.dataValues;
-      if (id == id_gender) {
-        movieGender = gender;
-      }
-    });
-  
-    let charactersArr = [];
-    characters.forEach(character => {
-      const { name } = character.dataValues;
-      charactersArr.push(name);
-    });
-  
-    moviesArr.push({
-      id,
-      image,
-      title,
-      creationDate,
-      details: {
-        qualification,
-        gender: movieGender,
-        characters: charactersArr,
-      },
-    });
-  });
+  const { query, token } = req;
+
+  const movies = await service.getAllMovies(query, token);
+  const moviesArr = await moviesInArr(movies);
   
   res.render('modify/movies/modify_movies', {
     title: 'Peliculas',
@@ -159,7 +45,7 @@ const modifyMovies = async(req, res) => {
 };
 
 const createView = async(req, res) => {
-  const id_user = req.token.userValid.id;
+  const id_user = req.token.body.id;
   const charactersArr = await Characters.findAll({ where: { id_user } });
   const gendersArr = await Genders.findAll();
   
@@ -172,14 +58,12 @@ const createView = async(req, res) => {
 };
 
 const createMovie = async(req, res) => {
-  const { title, creationDate, qualification, image, characters } = req.body;
-  const id_user = req.token.userValid.id;
+  const { body, token } = req;
+  const { characters } = body;
+
+  const movie = await service.createMovie(body, token);
+
   let repeatValue = [];
-  
-  let { gender } = req.body;
-  if (gender == '') gender = null;
-  
-  //Valores vacios o repetidos son igualados a null
   for (let i = 0 ; i < characters.length ; i++) {
     if (!characters[i]) characters[i] = null;
   
@@ -190,22 +74,10 @@ const createMovie = async(req, res) => {
     repeatValue.push(characters[i]);
   }
   
-  //Creacion de la nueva pelicula
-  const newMovie = await Movies.create({
-    title: title.toLowerCase(),
-    creationDate,
-    qualification,
-    image,
-    id_user,
-    id_gender: gender,
-  });
-  
-  //Creacion de las relaciones con personajes
-  const idNewMovie = newMovie.dataValues.id;
-  
-  characters.forEach( async(character) => {
+  const idNewMovie = movie.dataValues.id;
+  characters.forEach(async(character) => {
     await Character_Movie.create({
-      id_user,
+      id_user: token.body.id,
       id_character: character,
       id_movie: idNewMovie,
     });
@@ -213,66 +85,36 @@ const createMovie = async(req, res) => {
       
   res.render('modify/movies/add_movies', {
     title: 'Peliculas',
-  
     movies: [],
     characters: [],
     genders: [],
   
-    //ALERTA
     alert: true,
     alertIcon: 'success',
     alertTitle: 'Añadida',
     alertText: 'Pelicula añadida correctamente',
     showConfirmButton: false,
     timer: 1500,
-    route: 'modify/movies',
+    route: 'movies/modify',
   });
 };
 
 const updateView = async(req, res) => {
-  const idParam = req.params.id;
-  const id_user = req.token.userValid.id;
-  const moviesModel = await Movies.findOne({ where: { id: idParam }, include: Characters });
+  const { params, token } = req;
   const gendersArr = await Genders.findAll();
-  let moviesArr = [];
+
+  const movie = await service.getMovie(params);
   
-  if (!moviesModel) {
-    return res.send('no existe el pelicula');
-  }
-  
-  //Buscamos todos los personajes para un select
-  const charactersAll = await Characters.findAll({ where: { id_user } });
-  let charactersArr = [];
-  
-  charactersAll.forEach(character => {
+  if (!movie) return res.send('no existe el pelicula');
+  const moviesArr = await moviesInArr([movie,]);
+
+  const charactersAll = await Characters.findAll({ where: { id_user: token.body.id } });
+  const charactersArr = charactersAll.map((character) => {
     const { id, name } = character.dataValues;
-    charactersArr.push({
+    return {
       id,
       name,
-    });
-  });
-  console.log(charactersArr);
-      
-  //Colocamos en un array cada pelicula
-  const { id, title, creationDate, qualification, image, characters, id_gender } = moviesModel.dataValues;
-  let gender = await Genders.findOne({ where: { id: id_gender } });
-  gender = gender.dataValues.gender; 
-  let charactersMovie = [];
-  
-  characters.forEach((character) => {
-    charactersMovie.push(character.dataValues.name);
-  });
-      
-  moviesArr.push({
-    id,
-    image,
-    title,
-    creationDate,
-    details: {
-      qualification,
-      gender,
-      characters: charactersMovie,
-    },
+    };
   });
   
   res.render('modify/movies/upd_movies', {
@@ -280,14 +122,17 @@ const updateView = async(req, res) => {
     movies: moviesArr,
     characters: charactersArr,
     genders: gendersArr,
+
     alert: false,
   });
 };
 
 const updateMovie = async(req, res) => {
+  const { body, params } = req;
+
   const idParam = req.params.id;
-  const id_user = req.token.userValid.id;
-  const { title, creationDate, qualification, image, characters, gender } = req.body;
+  const id_user = req.token.body.id;
+  const { characters } = body;
   
   //Relacion personajes de la pelicula
   const emptyCharacterMovie = await Character_Movie.findAll({ where: { id_movie: idParam } });
@@ -307,7 +152,7 @@ const updateMovie = async(req, res) => {
   //En caso de no existir relaciones
   if (emptyCharacterMovie.length == 0) {
   
-    characters.forEach( async(character) => {
+    characters.forEach(async(character) => {
       await Character_Movie.create({
         id_user,
         id_character: character,
@@ -318,7 +163,7 @@ const updateMovie = async(req, res) => {
     //En caso existir relaciones
   } else {
   
-    emptyCharacterMovie.forEach( async(elem) => {
+    emptyCharacterMovie.forEach(async(elem) => {
       const idRelation = (elem.dataValues.id);
   
       const allow = await Character_Movie.update({
@@ -328,7 +173,7 @@ const updateMovie = async(req, res) => {
       if (allow) {
         let contCharacter = 0;
   
-        emptyCharacterMovie.forEach( async(elem) => {
+        emptyCharacterMovie.forEach(async(elem) => {
           const idRelation = (elem.dataValues.id);
   
           let character = characters[contCharacter];
@@ -343,50 +188,28 @@ const updateMovie = async(req, res) => {
   
   }
   
-  //Actualizamos la pelicula
-  await Movies.update({
-    title,
-    creationDate,
-    qualification,
-    image,
-    id_gender: gender,
-  }, { where: { id: idParam } });
+  await service.updateMovie(body, params);
   
   res.render('modify/movies/upd_movies', {
     title: 'Peliculas',
-  
     movies: [],
   
-    //ALERTA
     alert: true,
     alertIcon: 'success',
     alertTitle: 'Actualizado',
     alertText: 'Pelicula actualizada correctamente',
     showConfirmButton: false,
     timer: 1500,
-    route: 'modify/movies',
+    route: 'movies/modify',
   });
 };
 
 const deleteView = async(req, res) => {
-  const idParam = req.params.id;
-  const moviesModel = await Movies.findOne({ where: { id: idParam } });
-  let moviesArr = [];
+  const { params } = req;
+  const movie = await service.getMovie(params);
   
-  if (!moviesModel) {
-    return res.send('no existe la pelicula');
-  }
-  
-  const { id, title, creationDate, qualification, image } = moviesModel.dataValues;
-  moviesArr.push({
-    id,
-    image,
-    title,
-    creationDate,
-    details: {
-      qualification,
-    },
-  });
+  if (!movie) return res.send('no existe la pelicula');
+  const moviesArr = await moviesInArr([movie,]);
   
   res.render('modify/movies/del_movies', {
     title: 'Peliculas',
@@ -396,28 +219,26 @@ const deleteView = async(req, res) => {
 };
 
 const deleteMovie = async(req, res) => {
-  const idParam = req.params.id;
+  const { params } = req;
   
-  await Movies.destroy({ where: { id: idParam } });
+  await service.deleteMovie(params);
   
   res.render('modify/movies/del_movies', {
     title: 'Peliculas',
-  
     movies: [],
   
-    //ALERTA
     alert: true,
     alertIcon: 'success',
     alertTitle: 'Eliminada',
     alertText: 'Pelicula eliminada correctamente',
     showConfirmButton: false,
     timer: 1500,
-    route: 'modify/movies',
+    route: 'movies/modify',
   });
 };
 
 module.exports = {
-  getMovies,
+  getAllMovies,
   modifyMovies,
   createView,
   createMovie,

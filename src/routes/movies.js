@@ -4,7 +4,7 @@ const controller = require('../controllers/movies');
 const router = express.Router();
 
 router
-  .get('/', controller.getMovies)
+  .get('/', controller.getAllMovies)
   .get('/modify', controller.modifyMovies)
 
   .get('/modify/add', controller.createView)
