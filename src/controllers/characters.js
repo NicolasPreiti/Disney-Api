@@ -1,6 +1,5 @@
 const service = require('../services/characters');
 const { charactersInArr } = require('../helpers/charactersArray');
-const { Characters, Movies } = require('../database/db');
 
 const getAllCharacters = async(req, res) => {
   const { query, token } = req;
@@ -71,33 +70,17 @@ const createCharacter = async(req, res) => {
 };
 
 const updateView = async(req, res) => {
-  const idParam = req.params.id;
-  const id_user = req.token.body.id;
+  const { params } = req;
 
-  const character = await Characters.findOne({ where: { id: idParam }, include: Movies });
-  if (!character) {
-    return res.send('no existe el personaje');
-  }
+  const character = await service.getCharacter(params);
 
-  //Buscamos todas las peliculas
-  const movies = await Movies.findAll({ where: { id_user } });
-  let moviesArr = [];
-
-  movies.forEach((movie) => {
-    const { id, title } = movie.dataValues;
-    moviesArr.push({
-      id,
-      title,
-    });
-  });
-
-  const charactersModel = [character,];
-  const charactersArr = charactersInArr(charactersModel);
+  if (!character) return res.send('no existe el personaje');
+  const charactersArr = charactersInArr([character,]);
 
   res.render('modify/characters/upd_characters', {
     title: 'Personajes',
     characters: charactersArr,
-    movies: moviesArr,
+    movies: [],
     alert: false,
   });
 };
@@ -122,15 +105,12 @@ const updateCharacter = async(req, res) => {
 };
 
 const deleteView = async(req, res) => {
-  const idParam = req.params.id;
-  const character = await Characters.findOne({ where: { id: idParam }, include: Movies });
+  const { params } = req;
 
-  if (!character) {
-    return res.send('no existe el personaje');
-  }
+  const character = await service.getCharacter(params);
 
-  const charactersModel = [character,];
-  const charactersArr = charactersInArr(charactersModel);
+  if (!character) return res.send('no existe el personaje');
+  const charactersArr = charactersInArr([character,]);
 
   res.render('modify/characters/del_characters', {
     title: 'Personajes',

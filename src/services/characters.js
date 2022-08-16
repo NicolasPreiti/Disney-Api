@@ -1,5 +1,18 @@
 const { Characters, Movies } = require('../database/db');
 
+const getCharacter = async(params) => {
+  try {
+    const { id } = params;
+
+    return await Characters.findOne({
+      where: { id },
+      include: Movies, 
+    });
+  } catch (err) {
+    throw new Error(err);
+  }
+};
+
 const getAllCharacters = async(query, token) => {
   try {
     const { name, age, weight } = query;
@@ -78,6 +91,7 @@ const deleteCharacter = async(params) => {
 };
 
 module.exports = {
+  getCharacter,
   getAllCharacters,
   createCharacter,
   updateCharacter,
