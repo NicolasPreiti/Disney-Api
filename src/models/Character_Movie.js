@@ -1,14 +1,34 @@
-const character_movie = (sequelize, Sequelize) => {
-  return sequelize.define('character_movie', {
-    id: { type: Sequelize.INTEGER, 
-      autoIncrement: true, 
-      allowNull: false, 
+'use strict';
+const {
+  Model,
+} = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Character_movie extends Model {
+    static associate(models) {
+      models.User.hasOne(Character_movie, { foreignKey: 'id_user' });
+      Character_movie.belongsTo(models.User, { foreignKey: 'id_user' });
+    }
+  }
+  Character_movie.init({
+    id: {
+      allowNull: false,
+      autoIncrement: true,
       primaryKey: true,
+      type: DataTypes.INTEGER,
     },
-    id_user: { type: Sequelize.INTEGER, allowNull: false },
+    id_user: {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+    },
+    id_character: {
+      type: DataTypes.INTEGER,
+    },
+    id_movie: {
+      type: DataTypes.INTEGER,
+    },
   }, {
-    timestamps: false,
+    sequelize,
+    modelName: 'Character_movie',
   });
+  return Character_movie;
 };
-
-module.exports = { character_movie };

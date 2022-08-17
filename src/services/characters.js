@@ -1,12 +1,12 @@
-const { Characters, Movies } = require('../database/db');
+const { Character, Movie } = require('../models');
 
 const getCharacter = async(params) => {
   try {
     const { id } = params;
 
-    return await Characters.findOne({
+    return await Character.findOne({
       where: { id },
-      include: Movies, 
+      include: Movie, 
     });
   } catch (err) {
     throw new Error(err);
@@ -19,26 +19,26 @@ const getAllCharacters = async(query, token) => {
     const { id } = token.body;
 
     if (name) {
-      return await Characters.findAll({ 
+      return await Character.findAll({ 
         where: { id_user: id, name },
-        include: Movies });
+        include: Movie });
     }
 
     if (age) {
-      return await Characters.findAll({ 
+      return await Character.findAll({ 
         where: { id_user: id, age },
-        include: Movies });
+        include: Movie });
     }
 
     if (weight) {
-      return await Characters.findAll({ 
+      return await Character.findAll({ 
         where: { id_user: id, weight },
-        include: Movies });
+        include: Movie });
     }
 
-    return await Characters.findAll({ 
+    return await Character.findAll({ 
       where: { id_user: id },
-      include: Movies });
+      include: Movie });
   } catch (err) {
     throw new Error(err);
   }
@@ -49,7 +49,7 @@ const createCharacter = async(body, token) => {
     const { name, age, weight, history, image } = body;
     const { id } = token.body;
 
-    return await Characters.create({
+    return await Character.create({
       name: name.toLowerCase(),
       age,
       weight,
@@ -67,7 +67,7 @@ const updateCharacter = async(body, params) => {
     const { name, age, weight, history, image } = body;
     const { id } = params;
 
-    return await Characters.update({
+    return await Character.update({
       name,
       age,
       weight,
@@ -84,7 +84,7 @@ const deleteCharacter = async(params) => {
   try {
     const { id } = params;
 
-    return await Characters.destroy({ where: { id } });
+    return await Character.destroy({ where: { id } });
   } catch (err) {
     throw new Error(err);
   }

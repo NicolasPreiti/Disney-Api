@@ -1,10 +1,10 @@
-const { Genders } = require('../database/db');
+const { Gender } = require('../models');
 
 const moviesInArr = async(arr) => {
-  const genders = await Genders.findAll();
+  const genders = await Gender.findAll();
 
   const moviesArr = arr.map((elem) => {
-    const { id, title, creationDate, qualification, image, characters, id_gender } = elem.dataValues;
+    const { id, title, creationDate, qualification, image, Characters, id_gender } = elem.dataValues;
     let movieGender;
 
     genders.map((elem) => {
@@ -14,7 +14,7 @@ const moviesInArr = async(arr) => {
       }
     });
 
-    const charactersArr = characters.map((character) => {
+    const charactersArr = Characters.map((character) => {
       const { name } = character.dataValues;
       return name;
     });

@@ -12,10 +12,6 @@ module.exports = {
     'ecmaVersion': 'latest',
   },
   'rules': {
-    // 'strict': [
-    //   'error',
-    //   'safe',
-    // ],
     'indent': [
       'error',
       2,
@@ -32,9 +28,16 @@ module.exports = {
       'error',
       'always',
     ],
-    'no-multiple-empty-lines': [ 
-      'error', 
-      { 'max': 1 }, 
+    'no-multiple-empty-lines': [
+      'error',
+      { 'max': 1 },
+    ],
+    'no-trailing-spaces': [
+      'error',
+      {
+        skipBlankLines: false,
+        ignoreComments: false,
+      },
     ],
     'object-curly-spacing': [
       'error',
@@ -80,9 +83,9 @@ module.exports = {
     ],
     'arrow-spacing': [
       'error',
-      { 
+      {
         'before': true,
-        'after': true, 
+        'after': true,
       },
     ],
     'arrow-parens': [
@@ -90,7 +93,7 @@ module.exports = {
       'always',
     ],
     'sort-imports': [
-      'error', 
+      'error',
       {
         'ignoreCase': false,
         'ignoreDeclarationSort': false,

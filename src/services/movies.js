@@ -1,12 +1,12 @@
-const { Movies, Characters } = require('../database/db');
+const { Movie, Character } = require('../models');
 
 const getMovie = async(params) => {
   try {
     const { id } = params;
 
-    return await Movies.findOne({
+    return await Movie.findOne({
       where: { id }, 
-      include: Characters, 
+      include: Character, 
     });
   } catch (err) {
     throw new Error(err);
@@ -19,31 +19,31 @@ const getAllMovies = async(query, token) => {
     const { id } = token.body;
 
     if (title) {
-      return await Movies.findAll({
+      return await Movie.findAll({
         where: { id_user: id, title },
-        include: Characters,
+        include: Character,
       });
     }
     
     if (order === 'ASC') {
-      return await Movies.findAll({
+      return await Movie.findAll({
         where: { id_user: id },
         order: [['creationDate', 'ASC',],],
-        include: Characters,
+        include: Character,
       });
     }
 
     if (order === 'DESC') {
-      return await Movies.findAll({
+      return await Movie.findAll({
         where: { id_user: id },
         order: [['creationDate', 'DESC',],],
-        include: Characters,
+        include: Character,
       });
     }
 
-    return await Movies.findAll({
+    return await Movie.findAll({
       where: { id_user: id },
-      include: Characters,
+      include: Character,
     });
   } catch (err) {
     throw new Error(err);
@@ -55,7 +55,7 @@ const createMovie = async(body, token) => {
     const { title, creationDate, qualification, image, gender } = body;
     const { id } = token.body;
 
-    return await Movies.create({
+    return await Movie.create({
       title: title.toLowerCase(),
       creationDate,
       qualification,
@@ -74,7 +74,7 @@ const updateMovie = async(body, params) => {
     const { title, creationDate, qualification, image, gender } = body;
     const { id } = params;
 
-    return await Movies.update({
+    return await Movie.update({
       title,
       creationDate,
       qualification,
@@ -90,7 +90,7 @@ const deleteMovie = async(params) => {
   try {
     const { id } = params;
 
-    return await Movies.destroy({ where: { id } });
+    return await Movie.destroy({ where: { id } });
   } catch (err) {
     throw new Error(err);
   }

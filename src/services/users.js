@@ -1,15 +1,15 @@
-const { Users } = require('../database/db');
+const { User } = require('../models');
 const { encryptPassword, comparePassword } = require('../helpers/hash');
 
 const registerUser = async(body) => {
   try {
     const { email, password } = body;
-    const existingUser = await Users.findOne({ where: { email } });
+    const existingUser = await User.findOne({ where: { email } });
 
     if (existingUser) return false;
     const passwordHash = await encryptPassword(password);
 
-    return await Users.create({
+    return await User.create({
       email,
       password: passwordHash,
     });
@@ -21,7 +21,7 @@ const registerUser = async(body) => {
 const loginUser = async(body) => {
   try {
     const { email, password } = body;
-    const user = await Users.findOne({ where: { email } });
+    const user = await User.findOne({ where: { email } });
 
     const match = !user
       ? false

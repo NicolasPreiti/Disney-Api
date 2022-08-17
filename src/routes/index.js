@@ -1,5 +1,5 @@
 const express = require('express');
-const { sessionValidator  } = require('../middlewares/sessionValidator');
+const { sessionValidator } = require('../middlewares/sessionValidator');
 const { importAllJS } = require('../helpers/importAll');
 
 const routes = importAllJS(__filename, __dirname);
