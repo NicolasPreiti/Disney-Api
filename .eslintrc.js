@@ -111,5 +111,19 @@ module.exports = {
         ],
       },
     ],
+    'keyword-spacing': [
+      'error',
+      {
+        before: true,
+        after: true,
+      },
+    ],
+    'comma-spacing': [
+      'error',
+      {
+        before: false,
+        after: true,
+      },
+    ],
   },
 };
