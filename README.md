@@ -18,6 +18,7 @@ if you not have a database yet, run this:
 npx sequelize-cli db:create
 ```
 
+else run the migrations
 ``` bash
 npx sequelize-cli db:migrate
 ```
