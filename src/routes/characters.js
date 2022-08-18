@@ -6,7 +6,7 @@ const router = express.Router();
 router
   .get('/', controller.getAllCharacters)
   .get('/modify', controller.modifyCharacters)
-  
+
   .get('/modify/add', controller.createView)
   .post('/modify/add', controller.createCharacter)
 

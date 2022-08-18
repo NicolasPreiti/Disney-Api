@@ -6,7 +6,7 @@ const getCharacter = async(params) => {
 
     return await Character.findOne({
       where: { id },
-      include: Movie, 
+      include: Movie,
     });
   } catch (err) {
     throw new Error(err);
@@ -19,24 +19,24 @@ const getAllCharacters = async(query, token) => {
     const { id } = token.body;
 
     if (name) {
-      return await Character.findAll({ 
+      return await Character.findAll({
         where: { id_user: id, name },
         include: Movie });
     }
 
     if (age) {
-      return await Character.findAll({ 
+      return await Character.findAll({
         where: { id_user: id, age },
         include: Movie });
     }
 
     if (weight) {
-      return await Character.findAll({ 
+      return await Character.findAll({
         where: { id_user: id, weight },
         include: Movie });
     }
 
-    return await Character.findAll({ 
+    return await Character.findAll({
       where: { id_user: id },
       include: Movie });
   } catch (err) {
@@ -73,7 +73,7 @@ const updateCharacter = async(body, params) => {
       weight,
       history,
       image,
-    }, 
+    },
     { where: { id } });
   } catch (err) {
     throw new Error(err);

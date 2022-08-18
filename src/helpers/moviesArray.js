@@ -31,7 +31,7 @@ const moviesInArr = async(arr) => {
       },
     };
   });
-  
+
   return moviesArr;
 };
 

@@ -5,8 +5,8 @@ const getMovie = async(params) => {
     const { id } = params;
 
     return await Movie.findOne({
-      where: { id }, 
-      include: Character, 
+      where: { id },
+      include: Character,
     });
   } catch (err) {
     throw new Error(err);
@@ -24,7 +24,7 @@ const getAllMovies = async(query, token) => {
         include: Character,
       });
     }
-    
+
     if (order === 'ASC') {
       return await Movie.findAll({
         where: { id_user: id },

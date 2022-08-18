@@ -13,7 +13,7 @@ const registerView = (req, res) => {
 const registerUser = async(req, res) => {
   const { body } = req;
   const newUser = await service.registerUser(body);
-    
+
   if (!newUser) {
     return res.render('auth/register', {
       title: 'Registro',
@@ -26,7 +26,7 @@ const registerUser = async(req, res) => {
       showConfirmButton: true,
       timer: false,
       route: 'auth/register',
-            
+
     });
   }
 
@@ -44,11 +44,11 @@ const registerUser = async(req, res) => {
     showConfirmButton: false,
     timer: 1500,
     route: 'auth/login',
-        
+
   });
 };
 
-const loginView = (req ,res) => {
+const loginView = (req, res) => {
   res.render('auth/login', {
     title: 'Login',
     alert: false,
@@ -70,12 +70,12 @@ const loginUser = async(req, res) => {
       showConfirmButton: true,
       timer: false,
       route: 'auth/login',
-         
+
     });
   }
-    
-  const userData = { 
-    id: user.id, 
+
+  const userData = {
+    id: user.id,
   };
   const token = generateToken(userData);
 

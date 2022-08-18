@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       Movie.belongsTo(models.Gender, { foreignKey: 'id_gender' });
 
       Movie.belongsToMany(models.Character, {
-        through: models.Character_movie, 
+        through: models.Character_movie,
         foreignKey: {
           name: 'id_movie',
           type: DataTypes.INTEGER,

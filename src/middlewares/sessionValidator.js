@@ -8,7 +8,7 @@ const sessionValidator = (req, res, next) => {
   if (!accessToken) {
     return res.render('auth/login', {
       title: 'Error',
-    
+
       //ALERTA
       alert: true,
       alertIcon: 'info',
@@ -19,15 +19,15 @@ const sessionValidator = (req, res, next) => {
       route: 'auth/login',
     });
   }
-    
+
   const jwtData = jwtDecode(accessToken);
   req.token = jwtData;
-    
+
   jwt.verify(accessToken, process.env.JWT_SECRET, (err) => {
     if (err) {
       return res.render('auth/login', {
         title: 'Error',
-        
+
         //ALERTA
         alert: true,
         alertIcon: 'info',

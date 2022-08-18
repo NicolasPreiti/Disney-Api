@@ -6,10 +6,10 @@ module.exports = (sequelize, DataTypes) => {
   class Character extends Model {
     static associate(models) {
       models.User.hasOne(Character, { foreignKey: 'id_user' });
-      Character.belongsTo(models.User,{ foreignKey: 'id_user' });
+      Character.belongsTo(models.User, { foreignKey: 'id_user' });
 
       Character.belongsToMany(models.Movie, {
-        through: models.Character_movie, 
+        through: models.Character_movie,
         foreignKey: {
           name: 'id_character',
           type: DataTypes.INTEGER,

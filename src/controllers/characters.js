@@ -53,7 +53,7 @@ const createCharacter = async(req, res) => {
   const { body, token } = req;
 
   await service.createCharacter(body, token);
-    
+
   res.render('modify/characters/add_characters', {
     title: 'Personajes',
     characters: [],
@@ -66,7 +66,7 @@ const createCharacter = async(req, res) => {
     timer: 1500,
     route: 'characters/modify',
   });
-    
+
 };
 
 const updateView = async(req, res) => {
