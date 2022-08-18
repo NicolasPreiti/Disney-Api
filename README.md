@@ -1,4 +1,4 @@
-# Disney-Api
+# Disney-API
 API developed with NodeJS with which we can explore the amazing world of disney.
 
 ## Envinroment setup
