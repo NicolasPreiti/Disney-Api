@@ -1,5 +1,5 @@
 # Disney-Api
-Api desarrollada en NodeJs para explorar el mundo de Disney.
+API developed with NodeJS with which we can explore the amazing world of disney.
 
 ## Envinroment setup
 
@@ -17,7 +17,6 @@ if you dont have a database yet, run this:
 ``` bash
 npx sequelize-cli db:create
 ```
-
 
 otherwise run migrations
 ``` bash
