@@ -7,9 +7,6 @@ require('./helpers/emailer');
 const app = express();
 const port = process.env.PORT || 3000;
 
-//  Database connection
-require('./database/db');
-
 // Templates Engine
 app.set('view engine', 'ejs');
 app.set('views', './src/views');
