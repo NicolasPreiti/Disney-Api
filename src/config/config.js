@@ -1,10 +1,9 @@
 require('dotenv').config();
 
-const env = process.env.NODE_ENV || 'development';
+module.exports = {
+  JWT_SECRET: process.env.JWT_SECRET,
 
-const config = {
   development: {
-    JWT_SECRET: process.env.JWT_SECRET,
     username: process.env.DB_USER_DV,
     password: process.env.DB_PASSWORD_DV,
     database: process.env.DB_NAME_DV,
@@ -13,7 +12,6 @@ const config = {
   },
 
   production: {
-    JWT_SECRET: process.env.JWT_SECRET,
     username: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
@@ -22,4 +20,3 @@ const config = {
   },
 };
 
-module.exports = config[env];
