@@ -13,12 +13,13 @@ npm install
 
 3) Migrations:
 
-if you not have a database yet, run this:
+if you dont have a database yet, run this:
 ``` bash
 npx sequelize-cli db:create
 ```
 
-else run the migrations
+
+otherwise run migrations
 ``` bash
 npx sequelize-cli db:migrate
 ```
